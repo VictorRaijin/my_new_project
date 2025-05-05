@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Image Classifier NFT</title>
+</head>
+<body>
+  <h1>AI Image Classifier NFT</h1>
+  <input type="file" id="imageInput" />
+  <button onclick="uploadImage()">Classify and Store</button>
+  <p id="result"></p>
+
+  <script>
+    async function uploadImage() {
+      const input = document.getElementById('imageInput');
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await fetch('http://localhost:3000/classify', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      document.getElementById('result').innerText = 'Label: ' + data.label + ' | Tx: ' + data.tx;
+    }
+  </script>
+</body>
+</html>
